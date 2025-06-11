@@ -2,13 +2,11 @@
 
 void split_string(char *operation, size_t from, size_t until) {
   for (size_t i = from; i <= until; i++) {
-    printf("-> Modify _%c_ =>", operation[i]);
     if (operation[i] >= '0' && operation[i] <= '9') {
       operation[i] = operation[i] - '0';
     } else {
       operation[i] = 0;
     }
-    printf(" _%d_\n", get_operand(operation, i));
   }
 }
 

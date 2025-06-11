@@ -50,13 +50,11 @@ void bistromathique_process_operation_for_adds(char *operation, size_t len, int 
   (void)depth;
   size_t plusminus_sign = lookup_plus_or_minus_sign(operation, len);
   while (plusminus_sign != SIZE_MAX) {
-    printf("-> Result A: _%s_\n", operation);
     if (operation[plusminus_sign] == '+') {
       bistromathique_process_add(operation, len, plusminus_sign);
     } else {
       // TODO: Support subs
     }
-    printf("-> Result B: _%s_\n", operation);
     
     
     plusminus_sign = lookup_plus_or_minus_sign(operation, len);
@@ -64,7 +62,7 @@ void bistromathique_process_operation_for_adds(char *operation, size_t len, int 
 }
 
 void bistromathique_process_operation(char *operation, size_t len, int depth) {
-  printf("%*s Process: _%.*s_\n", depth * 2, "->", (int) len, operation);
+  DBG_PROCESS("%*s Process: _%.*s_\n", depth * 2, "->", (int) len, operation);
 
   bistromathique_process_operation_for_parentheses(operation, len, depth);
   bistromathique_process_operation_for_mults(operation, len, depth);

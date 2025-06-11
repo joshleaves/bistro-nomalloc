@@ -12,16 +12,12 @@ void bistromathique_process_add(char *operation, size_t len, size_t sign_idx) {
   //   car_idx--;
   // while (cdr_end < len && is_number(operation[cdr_end + 1]))
   //   cdr_end++;
-  printf("-> Indexes CAR: %c->%c\n", operation[car_idx], operation[car_end]);
-  printf("-> Indexes CDR: %c->%c\n", operation[cdr_idx], operation[cdr_end]);
+  DBG_ADD("-> Indexes CAR: %c->%c\n", operation[car_idx], operation[car_end]);
+  DBG_ADD("-> Indexes CDR: %c->%c\n", operation[cdr_idx], operation[cdr_end]);
   split_string(operation, car_idx, cdr_end);
-  printf("-> Indexes CAR: %d->%d\n", get_operand(operation, car_idx), get_operand(operation, car_end));
-  printf("-> Indexes CDR: %d->%d\n", get_operand(operation, cdr_idx), get_operand(operation, cdr_end));
-  printf("Result: _");
-  for (size_t i = car_idx; i <= cdr_end; i++) {
-    printf("%d", get_result(operation, i));
-  }
-  printf("_\n");
+  DBG_ADD("-> Indexes CAR: %d->%d\n", get_operand(operation, car_idx), get_operand(operation, car_end));
+  DBG_ADD("-> Indexes CDR: %d->%d\n", get_operand(operation, cdr_idx), get_operand(operation, cdr_end));
+  DBG_PRINT_RESULT(ADD, operation, car_idx, cdr_end);
 
   size_t car_len = car_end - car_idx;
   size_t cdr_len = cdr_end - cdr_idx;
@@ -35,7 +31,7 @@ void bistromathique_process_add(char *operation, size_t len, size_t sign_idx) {
     int car_value = car_consumed ? 0 : get_operand(operation, car_end - i);
     int cdr_value = cdr_consumed ? 0 : get_operand(operation, cdr_end - i);
     int value = car_value + cdr_value + carry;
-    printf("-> Operation: %d + %d = %d\n", car_value, cdr_value, value);
+    DBG_ADD("-> Operation: %d + %d = %d\n", car_value, cdr_value, value);
     set_operand(operation, car_end - i, 0);
     carry = increment_result(operation, cdr_end - i, value);
     if (!car_consumed && (car_idx == car_end - i))
@@ -44,11 +40,7 @@ void bistromathique_process_add(char *operation, size_t len, size_t sign_idx) {
       cdr_consumed = true;
     // operation[car_end - i] = '0';
     // operation[cdr_end - i] = '0' + value % 10;
-    printf("Result: _");
-    for (size_t i = car_idx; i <= cdr_end; i++) {
-      printf("%d", get_result(operation, i));
-    }
-    printf("_\n");
-    }
+    DBG_PRINT_RESULT(ADD, operation, car_idx, cdr_end);
+  }
   reunite_string(operation, car_idx, cdr_end);
 }

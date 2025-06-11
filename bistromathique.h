@@ -7,6 +7,32 @@
 #include <stdint.h>  // for SIZE_MAX
 #include <string.h>  // for strlen
 
+#if DEBUG_MULT
+  #define DBG_MULT(...) fprintf(stderr, __VA_ARGS__)
+#else
+  #define DBG_MULT(...) ((void)0)
+#endif
+
+#if DEBUG_ADD
+  #define DBG_ADD(...) fprintf(stderr, __VA_ARGS__)
+#else
+  #define DBG_ADD(...) ((void)0)
+#endif
+
+#if DEBUG_PROCESS
+  #define DBG_PROCESS(...) fprintf(stderr, __VA_ARGS__)
+#else
+  #define DBG_PROCESS(...) ((void)0)
+#endif
+
+#define DBG_PRINT_RESULT(OP_TYPE, op, from, to) \
+  do { \
+    DBG_##OP_TYPE("Result: _"); \
+    for (size_t _i = (from); _i <= (to); _i++) \
+      DBG_##OP_TYPE("%d", get_result((op), _i)); \
+    DBG_##OP_TYPE("_\n"); \
+  } while (0) 
+
 int main(int argc, char**argv);
 int print_usage(char *caller);
 void print_result(char *result);
